@@ -20,4 +20,5 @@ def cli():
     args = parser.parse_args()
 
     if args.github_path:
-        main(args.github_path, outputDir=args.output)
+        print("\r")
+        main(args.github_path, output_dir=args.output)

@@ -1,7 +1,9 @@
 import os
 from urllib.parse import urlparse
 
+import emoji
 import requests
+from alive_progress import alive_bar
 
 
 def normalize_github_url(github_url):
@@ -47,43 +49,50 @@ def get_contents(content_url):
         return download_urls
 
 
-def main(github_url, outputDir=None):
+def main(github_url, output_dir=None):
     """Main function."""
 
     repo_data = normalize_github_url(github_url)
     owner = repo_data.get("owner")
     repo = repo_data.get("repo")
     branch = repo_data.get("branch")
-    root_target_dir = repo_data.get("target")
-    target_path = repo_data.get("target_path") + "/" + root_target_dir
+    root_target = repo_data.get("target")
 
+    target_path = repo_data.get("target_path") + "/" + root_target
     content_url = f"https://api.github.com/repos/{owner}/{repo}/contents/{target_path}?ref={branch}"
     contents = get_contents(content_url)
 
     # Create the target directory first.
-    root_target_dir = os.path.join(outputDir, root_target_dir)
+    root_target_dir = os.path.join(output_dir, root_target)
     os.makedirs(root_target_dir, exist_ok=True)
 
-    for content in contents:
-        content_path = content.get("name")
-        download_url = content.get("download_url")
+    with alive_bar(len(contents)) as bar:
+        for content in contents:
+            content_path = content.get("name")
+            download_url = content.get("download_url")
 
-        if download_url is None:
-            continue
+            if download_url is None:
+                continue
 
-        # Extract the parent directory path and file from the current
-        # 'content_path' and properly join with root target directory.
-        content_parentdir = os.path.dirname(content_path)
-        content_parentdir = os.path.join(root_target_dir, content_parentdir)
-        content_filename = os.path.join(root_target_dir, content_path)
+            # Extract the parent directory path and file from the current
+            # 'content_path' and properly join with root target directory.
+            content_parentdir = os.path.dirname(content_path)
+            content_parentdir = os.path.join(root_target_dir, content_parentdir)
+            content_filename = os.path.join(root_target_dir, content_path)
 
-        os.makedirs(content_parentdir, exist_ok=True)
+            os.makedirs(content_parentdir, exist_ok=True)
 
-        resp = requests.get(download_url)
-        resp_content = resp.content
+            resp = requests.get(download_url)
+            resp_content = resp.content
 
-        print(content_filename)
-        with open(content_filename, mode="wb") as file:
-            file.write(resp_content)
+            with open(content_filename, mode="wb") as file:
+                file.write(resp_content)
 
-    print(f"Downloaded {root_target_dir}")
+            bar()  # Update the progress bar
+
+    output_str = f"\n:package: Downloaded {root_target!r} folder from repo {repo!r} "
+    if output_dir != "":
+        output_str += f"to {output_dir!r}."
+    else:
+        output_str += "to current directory."
+    print(emoji.emojize(output_str))
