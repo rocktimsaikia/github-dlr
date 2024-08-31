@@ -1,6 +1,7 @@
 import os
-import requests
 from urllib.parse import urlparse
+
+import requests
 
 PATH = "https://github.com/Animechan-API/animechan/tree/main/client/public"
 
@@ -58,9 +59,7 @@ def main():
     root_target_dir = repo_data.get("target")
     target_path = repo_data.get("target_path") + "/" + root_target_dir
 
-    content_url = (
-        f"https://api.github.com/repos/{owner}/{repo}/contents/{target_path}?ref={branch}"
-    )
+    content_url = f"https://api.github.com/repos/{owner}/{repo}/contents/{target_path}?ref={branch}"
     contents = get_contents(content_url)
 
     # Create the target directory first.
