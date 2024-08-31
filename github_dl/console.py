@@ -3,8 +3,6 @@ import argparse
 from github_dl import __version__
 from github_dl.source import main
 
-# github_url = "https://github.com/Animechan-API/animechan/tree/main/client/public"
-
 
 def cli():
     parser = argparse.ArgumentParser(
