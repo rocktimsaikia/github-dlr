@@ -3,13 +3,11 @@ from urllib.parse import urlparse
 
 import requests
 
-PATH = "https://github.com/Animechan-API/animechan/tree/main/client/public"
 
-
-def normalize_path(github_path):
+def normalize_github_url(github_url):
     """Normalize the provided Github directory path into a dict."""
 
-    parsed_url = urlparse(github_path)
+    parsed_url = urlparse(github_url)
     github_path = parsed_url.path.split("/")
     owner = github_path[1]
     repo = github_path[2]
@@ -49,10 +47,10 @@ def get_contents(content_url):
         return download_urls
 
 
-def main():
+def main(github_url):
     """Main function."""
 
-    repo_data = normalize_path(PATH)
+    repo_data = normalize_github_url(github_url)
     owner = repo_data.get("owner")
     repo = repo_data.get("repo")
     branch = repo_data.get("branch")
@@ -76,13 +74,15 @@ def main():
         # 'content_path' and properly join with root target directory.
         content_parentdir = os.path.dirname(content_path)
         content_parentdir = os.path.join(root_target_dir, content_parentdir)
-        content_filename = os.path.basename(content_path)
-        content_filename = os.path.join(content_parentdir, content_path)
+        content_filename = os.path.join(root_target_dir, content_path)
 
         os.makedirs(content_parentdir, exist_ok=True)
 
         resp = requests.get(download_url)
         resp_content = resp.content
 
+        print(content_filename)
         with open(content_filename, mode="wb") as file:
             file.write(resp_content)
+
+    print(f"Downloaded /{root_target_dir}")
