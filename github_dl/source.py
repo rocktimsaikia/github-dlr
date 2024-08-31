@@ -93,7 +93,7 @@ def main(github_url, output_dir=None):
     # Create the target directory first.
     os.makedirs(root_target_path, exist_ok=True)
 
-    with alive_bar(len(contents)) as bar:
+    with alive_bar(len(contents), stats=None) as bar:
         for content in contents:
             content_path = content.get("name")
             download_url = content.get("download_url")
@@ -108,6 +108,9 @@ def main(github_url, output_dir=None):
             content_filename = os.path.join(root_target_path, content_path)
 
             os.makedirs(content_parentdir, exist_ok=True)
+
+            # Update the progress bar with the name of the file being downloaded
+            bar.text(f"Downloading {content_path}")
 
             download_content(download_url, content_filename)
 
