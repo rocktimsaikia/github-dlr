@@ -47,7 +47,7 @@ def get_contents(content_url):
         return download_urls
 
 
-def main(github_url):
+def main(github_url, outputDir=None):
     """Main function."""
 
     repo_data = normalize_github_url(github_url)
@@ -61,6 +61,7 @@ def main(github_url):
     contents = get_contents(content_url)
 
     # Create the target directory first.
+    root_target_dir = os.path.join(outputDir, root_target_dir)
     os.makedirs(root_target_dir, exist_ok=True)
 
     for content in contents:
@@ -85,4 +86,4 @@ def main(github_url):
         with open(content_filename, mode="wb") as file:
             file.write(resp_content)
 
-    print(f"Downloaded /{root_target_dir}")
+    print(f"Downloaded {root_target_dir}")

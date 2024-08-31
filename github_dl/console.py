@@ -14,7 +14,7 @@ def cli():
     )
 
     parser.add_argument("github_path", help="Github directory full URL path")
-    parser.add_argument("--target", help="Target directory to download to")
+    parser.add_argument("--output", help="Target directory to download to", default="")
     parser.add_argument(
         "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
@@ -22,4 +22,4 @@ def cli():
     args = parser.parse_args()
 
     if args.github_path:
-        main(args.github_path)
+        main(args.github_path, outputDir=args.output)
