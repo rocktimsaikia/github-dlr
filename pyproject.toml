@@ -1,9 +1,14 @@
 [tool.poetry]
 name = "github-dl"
 version = "0.1.0"
-description = ""
+description = "Download individual files and folders from Github"
 authors = ["Rocktim Saikia <rocktimthedev@gmail.com>"]
 readme = "README.md"
+keywords = ["download", "github", "directory", "gitdown"]
+classifiers = [
+	"Environment :: Console",
+	"Programming Language :: Python :: 3.8"
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -22,3 +27,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 github-dl = 'github_dl.console:cli'
 gh-dl = 'github_dl.console:cli'
+
