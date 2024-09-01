@@ -4,6 +4,8 @@ Download individual files and folders from Github recursively.
 
 [![Tests](https://github.com/rocktimsaikia/github-dlr/actions/workflows/tests.yml/badge.svg)](https://github.com/rocktimsaikia/github-dlr/actions/workflows/tests.yml)
 
+[![Demo](.github/github-dl-demo.png)](.github/github-dl-demo.mp4)
+
 ## Motivation
 
 The project aims to save time and resources by allowing users to download only the specific folders and files they need from a GitHub repository, without the hassle of cloning the entire repo. It's designed for efficiency, making development and learning more streamlined.
