@@ -4,7 +4,7 @@ Download individual files and folders from Github recursively.
 
 [![Tests](https://github.com/rocktimsaikia/github-dlr/actions/workflows/tests.yml/badge.svg)](https://github.com/rocktimsaikia/github-dlr/actions/workflows/tests.yml)
 
-[![Demo](.github/github-dlr-demo.png)](.github/github-dlr-demo.mp4)
+[![Demo](https://github.com/user-attachments/assets/49e4068c-1090-4c9e-9b56-59388ff407a9)](https://github.com/user-attachments/assets/8927d4ef-f8e1-4699-b75b-b7e28291d509)
 
 ## Motivation
 
