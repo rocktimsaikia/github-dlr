@@ -22,7 +22,8 @@ pipx install cambd
 
 ## Usage
 
-> Using the tool is straightforward, copy the Github URL of the target repository folder and paste it after the command `github-dl` or it's alias `gh-dl`.
+> [!NOTE]
+>  Using the tool is straightforward, copy the Github URL of the target repository folder and paste it after the command `github-dl` or it's alias `gh-dl`.
 
 ```sh
 github-dl <github_path>
@@ -31,7 +32,8 @@ github-dl <github_path>
 github-dl https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
 ```
 
-By default it will download the entire folder from Github and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
+> [!NOTE]
+>  By default it will download the entire folder from Github and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
 
 ```sh
 github-dl --output wallpapers https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
