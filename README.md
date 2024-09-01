@@ -27,8 +27,14 @@ pipx install cambd
 ```sh
 github-dl <github_path>
 
-# Example
+# Basic Example
 github-dl https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
+```
+
+By default it will download the entire folder from Github and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
+
+```sh
+github-dl --output wallpapers https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
 ```
 
 \
@@ -49,3 +55,7 @@ options:
 
 Thanks for using github-dl!
 ```
+
+## LICENSE
+
+[MIT](./LICENSE) License &copy; [Rocktim Saikia](https://rocktimsaikia.dev) 2024
