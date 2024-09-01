@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "github-dlr"
-version = "0.1.0"
+version = "0.1.1"
 description = "Download individual files and folders from Github"
 homepage = "https://github.com/rocktimsaikia/github-dlr"
 authors = ["Rocktim Saikia <rocktimthedev@gmail.com>"]
