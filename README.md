@@ -1,6 +1,6 @@
 # Github-dl
 
-Download individual files and folders from Github without needing to clone the entire repo.
+Download individual files and folders from Github.
 
 [![Tests](https://github.com/rocktimsaikia/github-dl/actions/workflows/tests.yml/badge.svg)](https://github.com/rocktimsaikia/github-dl/actions/workflows/tests.yml)
 
@@ -23,7 +23,7 @@ pipx install cambd
 ## Usage
 
 > [!NOTE]
->  Using the tool is straightforward, copy the Github URL of the target repository folder and paste it after the command `github-dl` or it's alias `gh-dl`.
+> Using the tool is straightforward, copy the Github URL of the target repository folder and paste it after the command `github-dl` or it's alias `gh-dl`.
 
 ```sh
 github-dl <github_path>
@@ -33,7 +33,7 @@ github-dl https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-w
 ```
 
 > [!NOTE]
->  By default it will download the entire folder from Github and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
+> By default it will download the entire folder from Github and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
 
 ```sh
 github-dl --output wallpapers https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
