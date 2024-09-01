@@ -5,6 +5,8 @@ import emoji
 import requests
 from alive_progress import alive_bar
 
+from github_dlr.loader import start_loading_animation, stop_loading_animation
+
 # Modified print to support emoji syntax
 printx = lambda input: print(emoji.emojize(input))
 
@@ -85,7 +87,15 @@ def main(github_url, output_dir=None):
 
     target_path = repo_data.get("target_path") + "/" + root_target
     content_url = f"https://api.github.com/repos/{owner}/{repo}/contents/{target_path}?ref={branch}"
+
+    # Start the loading animation in a separate thread
+    # Start the loading animation with a custom message
+    loading_thread = start_loading_animation(
+        "Extracting the repository content information"
+    )
     contents = get_contents(content_url)
+    # Stop the loading animation
+    stop_loading_animation(loading_thread)
 
     is_single_file = isinstance(contents, dict)
     if is_single_file:
