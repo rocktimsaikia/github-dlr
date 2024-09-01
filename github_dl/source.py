@@ -9,8 +9,11 @@ from alive_progress import alive_bar
 printx = lambda input: print(emoji.emojize(input))
 
 
-def normalize_github_url(github_url):
+def normalize_github_url(github_url: str):
     """Normalize the provided Github directory path into a dict."""
+
+    if not github_url.startswith("https://github.com/"):
+        raise ValueError("Not a valid Github URL")
 
     parsed_url = urlparse(github_url)
     github_path = parsed_url.path.split("/")
