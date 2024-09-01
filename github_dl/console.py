@@ -8,7 +8,7 @@ def cli():
     parser = argparse.ArgumentParser(
         prog="github-dl",
         description="Download folders and files from Github.",
-        epilog="Thanks for using github-dl!",
+        epilog="Thanks for using github-dl (❁´◡`❁)",
     )
 
     parser.add_argument(
