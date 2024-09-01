@@ -1,7 +1,8 @@
 [tool.poetry]
-name = "github-dl"
+name = "github-dlr"
 version = "0.1.0"
 description = "Download individual files and folders from Github"
+homepage = "https://github.com/rocktimsaikia/github-dlr"
 authors = ["Rocktim Saikia <rocktimthedev@gmail.com>"]
 readme = "README.md"
 keywords = ["download", "github", "directory", "gitdown"]
@@ -25,6 +26,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-github-dl = 'github_dl.console:cli'
-gh-dl = 'github_dl.console:cli'
+github-dlr = 'github_dlr.console:cli'
+gh-dlr = 'github_dlr.console:cli'
 

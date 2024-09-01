@@ -1,6 +1,6 @@
 import pytest
 
-from github_dl.source import normalize_github_url
+from github_dlr.source import normalize_github_url
 
 
 def test_normalize_github_url():

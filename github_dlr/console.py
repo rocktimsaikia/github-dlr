@@ -1,14 +1,14 @@
 import argparse
 
-from github_dl import __version__
-from github_dl.source import main
+from github_dlr import __version__
+from github_dlr.source import main
 
 
 def cli():
     parser = argparse.ArgumentParser(
-        prog="github-dl",
+        prog="github-dlr",
         description="Download folders and files from Github.",
-        epilog="Thanks for using github-dl (❁´◡`❁)",
+        epilog="Thanks for using github-dlr (❁´◡`❁)",
     )
 
     parser.add_argument(
