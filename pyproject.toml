@@ -9,9 +9,10 @@ readme = "README.md"
 python = "^3.8"
 requests = "^2.32.3"
 argparse = "^1.4.0"
-tqdm = "^4.66.5"
 alive-progress = "^3.1.5"
 emoji = "^2.12.1"
+
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
 
 [build-system]
