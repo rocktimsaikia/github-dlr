@@ -1,6 +1,6 @@
 # Github-dlr
 
-Download individual files and folders from Github recursively.
+Download individual files and folders from GitHub recursively.
 
 [![Tests](https://github.com/rocktimsaikia/github-dlr/actions/workflows/tests.yml/badge.svg)](https://github.com/rocktimsaikia/github-dlr/actions/workflows/tests.yml)
 
@@ -25,7 +25,7 @@ pipx install github-dlr
 ## Usage
 
 > [!NOTE]
-> Using the tool is straightforward, copy the Github URL of the target repository folder and paste it after the command `github-dlr` or it's alias `gh-dlr`.
+> Using the tool is straightforward, copy the GitHub URL of the target repository folder and paste it after the command `github-dlr` or it's alias `gh-dlr`.
 
 ```sh
 github-dlr <github_path>
@@ -35,7 +35,7 @@ github-dlr https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-
 ```
 
 > [!NOTE]
-> By default it will download the entire folder from Github and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
+> By default it will download the entire folder from GitHub and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
 
 ```sh
 github-dlr --output wallpapers https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
