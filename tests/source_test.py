@@ -17,6 +17,34 @@ def test_normalize_github_url():
     assert result == expected_result
 
 
+def test_normalize_github_url_case_insensetive():
+    expected_result = {
+        "owner": "AnimeChan",
+        "repo": "animechan",
+        "branch": "main",
+        "target": "images",
+        "target_path": "client/public",
+    }
+    result = normalize_github_url(
+        "https://GITHUB.com/AnimeChan/animechan/tree/main/client/public/images"
+    )
+    assert result == expected_result
+
+
+def test_normalize_github_url_spaces_around():
+    expected_result = {
+        "owner": "AnimeChan",
+        "repo": "animechan",
+        "branch": "main",
+        "target": "images",
+        "target_path": "client/public",
+    }
+    result = normalize_github_url(
+        " https://GITHUB.com/AnimeChan/animechan/tree/main/client/public/images "
+    )
+    assert result == expected_result
+
+
 def test_normalize_github_url_single_file():
     expected_result = {
         "owner": "AnimeChan",
