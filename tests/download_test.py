@@ -1,9 +1,4 @@
 import os
-import re
-
-import emoji
-import pytest
-import requests
 
 from github_dlr.source import download_content
 
