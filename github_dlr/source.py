@@ -1,8 +1,9 @@
+import asyncio
 import os
 from urllib.parse import urlparse
 
+import aiohttp
 import emoji
-import requests
 from alive_progress import alive_bar
 
 from github_dlr.loader import start_loading_animation, stop_loading_animation
@@ -34,53 +35,56 @@ def normalize_github_url(github_url: str):
     }
 
 
-def get_contents(content_url):
+async def get_contents(content_url):
     """Extract all contents of given content url and return a 1D array."""
 
-    response = requests.get(content_url)
     download_urls = []
-    if response.ok:
-        response = response.json()
-        if isinstance(response, dict):
-            # If the response is dict it indicates it's a single file URL
-            # in this case, return a dict only to handle it early below.
-            return {
-                "name": response.get("name"),
-                "download_url": response.get("download_url"),
-                "content_blob": response.get("content"),
-            }
-        for resp in response:
-            content_name = resp.get("name")
-            content_type = resp.get("type")
-            content_self_url = resp.get("url")
-            content_download_url = resp.get("download_url")
-            if content_type == "dir":
-                sub_content = get_contents(content_self_url)
-                for sub_item in sub_content:
-                    sub_item["name"] = f"{content_name}/{sub_item.get('name')}"
-                    download_urls.append(sub_item)
-            elif content_type == "file":
-                download_urls.append(
-                    {"name": content_name, "download_url": content_download_url}
-                )
-        return download_urls
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(content_url) as response:
+            if response.ok:
+                response = await response.json()
+                if isinstance(response, dict):
+                    # If the response is dict it indicates it's a single file URL
+                    # in this case, return a dict only to handle it early below.
+                    return {
+                        "name": response.get("name"),
+                        "download_url": response.get("download_url"),
+                        "content_blob": response.get("content"),
+                    }
+                for resp in response:
+                    content_name = resp.get("name")
+                    content_type = resp.get("type")
+                    content_self_url = resp.get("url")
+                    content_download_url = resp.get("download_url")
+                    if content_type == "dir":
+                        sub_content = await get_contents(content_self_url)
+                        for sub_item in sub_content:
+                            sub_item["name"] = f"{content_name}/{sub_item.get('name')}"
+                            download_urls.append(sub_item)
+                    elif content_type == "file":
+                        download_urls.append(
+                            {"name": content_name, "download_url": content_download_url}
+                        )
+    return download_urls
 
 
-def download_content(download_url, output_file):
+async def download_content(download_url, output_file):
     """Download a single downloadable file given a download URL."""
 
     try:
-        resp = requests.get(download_url)
-        resp.raise_for_status()
-        resp_content = resp.content
+        async with aiohttp.ClientSession() as session:
+            async with session.get(download_url) as response:
+                response.raise_for_status()
+                resp_content = await response.read()
 
-        with open(output_file, mode="wb") as file:
-            file.write(resp_content)
+                with open(output_file, mode="wb") as file:
+                    file.write(resp_content)
     except BaseException:
         printx(f":warning: Failed to download {download_url!r}. Skipping this file!")
 
 
-def main(github_url, output_dir=None):
+async def main(github_url, output_dir=None):
     """Main function."""
 
     repo_data = normalize_github_url(github_url)
@@ -98,18 +102,20 @@ def main(github_url, output_dir=None):
     loading_thread = start_loading_animation(
         "Extracting the repository content information"
     )
-    contents = get_contents(content_url)
+    contents = await get_contents(content_url)
     # Stop the loading animation
     stop_loading_animation(loading_thread)
 
     is_single_file = isinstance(contents, dict)
     if is_single_file:
-        download_content(contents.get("download_url"), root_target_path)
+        await download_content(contents.get("download_url"), root_target_path)
         printx(f"\n:package: Downloaded {root_target!r} file from repo {repo!r}.")
         return
 
     # Create the target directory first.
     os.makedirs(root_target_path, exist_ok=True)
+
+    download_tasks = []
 
     with alive_bar(len(contents), stats=None) as bar:
         for content in contents:
@@ -130,9 +136,11 @@ def main(github_url, output_dir=None):
             # Update the progress bar with the name of the file being downloaded
             bar.text(f"Downloading {content_path}")
 
-            download_content(download_url, content_filename)
+            download_tasks.append(download_content(download_url, content_filename))
 
             bar()  # Update the progress bar
+
+        await asyncio.gather(*download_tasks)
 
     output_str = f"\n:package: Downloaded {root_target!r} folder from repo {repo!r} "
     if output_dir != "":
