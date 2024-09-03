@@ -69,12 +69,15 @@ def get_contents(content_url):
 def download_content(download_url, output_file):
     """Download a single downloadable file given a download URL."""
 
-    resp = requests.get(download_url)
-    resp.raise_for_status()
-    resp_content = resp.content
+    try:
+        resp = requests.get(download_url)
+        resp.raise_for_status()
+        resp_content = resp.content
 
-    with open(output_file, mode="wb") as file:
-        file.write(resp_content)
+        with open(output_file, mode="wb") as file:
+            file.write(resp_content)
+    except BaseException:
+        printx(f":warning: Failed to download {download_url!r}. Skipping this file!")
 
 
 def main(github_url, output_dir=None):

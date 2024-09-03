@@ -1,5 +1,7 @@
 import os
+import re
 
+import emoji
 import pytest
 import requests
 
@@ -24,7 +26,7 @@ def test_download_content_succes(requests_mock, tmp_path):
         assert file.read() == mock_content
 
 
-def test_download_content_failure(requests_mock, tmp_path):
+def test_download_content_failure(requests_mock, tmp_path, capfd):
     download_url = "https://github.com/AnimeChan/animechan/tree/main/client/public"
 
     requests_mock.get(download_url, status_code=404)
@@ -33,5 +35,9 @@ def test_download_content_failure(requests_mock, tmp_path):
     output_file = os.path.join(tmp_path, "foo.txt")
     print(output_file)
 
-    with pytest.raises(requests.exceptions.RequestException):
-        download_content(download_url, output_file)
+    download_content(download_url, output_file)
+
+    captured_stdout = capfd.readouterr().out
+    expected_stdout = f"Failed to download {download_url!r}. Skipping this file!"
+
+    assert expected_stdout in captured_stdout
