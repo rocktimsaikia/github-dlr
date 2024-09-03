@@ -70,6 +70,7 @@ def download_content(download_url, output_file):
     """Download a single downloadable file given a download URL."""
 
     resp = requests.get(download_url)
+    resp.raise_for_status()
     resp_content = resp.content
 
     with open(output_file, mode="wb") as file:
