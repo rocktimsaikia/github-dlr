@@ -12,6 +12,8 @@ The project aims to save time and resources by allowing users to download only t
 
 ## Install
 
+Requires Python version 3.8 or higher.
+
 ```sh
 pip install github-dlr
 ```
@@ -31,14 +33,14 @@ pipx install github-dlr
 github-dlr <github_path>
 
 # Basic Example
-github-dlr https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
+github-dlr https://github.com/makccr/wallpapers/blob/master/wallpapers/space
 ```
 
 > [!NOTE]
 > By default it will download the entire folder from GitHub and place in the current directory from where the command is being executed. If you want to specify a different output directory, you can do it via the `--output` or `-o` flag.
 
 ```sh
-github-dlr --output wallpapers https://github.com/linuxdotexe/nordic-wallpapers/tree/master/dynamic-wallpapers/Coast
+github-dlr --output wallpapers https://github.com/makccr/wallpapers/blob/master/wallpapers/space
 ```
 
 \
@@ -54,7 +56,7 @@ positional arguments:
 
 options:
   -h, --help      show this help message and exit
-  -o , --output   Destination directory to download to
+  -o, --output   Destination directory to download to
   -v, --version   show program version number and exit
 
 Thanks for using github-dlr!
