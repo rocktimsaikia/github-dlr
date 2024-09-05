@@ -1,36 +1,57 @@
 import os
 
+import pytest
+from aiohttp import web
+
 from github_dlr.source import download_content
 
 
-def test_download_content_succes(requests_mock, tmp_path):
-    download_url = "https://github.com/AnimeChan/animechan/tree/main/client/public"
+@pytest.mark.asyncio
+async def test_download_content_succes(aiohttp_client, tmp_path):
+    # aiohttp expects the url path to start with '/' hence not passing
+    # the full Github URL here.
+    download_url = "/AnimeChan/animechan/tree/main/client/public"
     mock_content = b"This is an image content"
 
-    requests_mock.get(download_url, content=mock_content)
+    # Create test server to mock the download URL
+    async def mock_handler(request):
+        return web.Response(body=mock_content)
+
+    app = web.Application()
+    app.router.add_get(download_url, mock_handler)
+
+    client = await aiohttp_client(app)
+    download_url = client.make_url(download_url)
 
     # Use tmp_path fixure to create temp file path
     output_file = os.path.join(tmp_path, "foo.txt")
-    print(output_file)
 
     # Download the file content and save it locally
-    download_content(download_url, output_file)
+    await download_content(download_url, output_file)
 
     # Verify the file was written correctly
     with open(output_file, "rb") as file:
         assert file.read() == mock_content
 
 
-def test_download_content_failure(requests_mock, tmp_path, capfd):
-    download_url = "https://github.com/AnimeChan/animechan/tree/main/client/public"
+@pytest.mark.asyncio
+async def test_download_content_failure(aiohttp_client, tmp_path, capfd):
+    download_url = "/AnimeChan/animechan/tree/main/client/public"
 
-    requests_mock.get(download_url, status_code=404)
+    # Create test server to mock the download URL
+    async def mock_handler(request):
+        return web.Response(status=404)
+
+    app = web.Application()
+    app.router.add_get(download_url, mock_handler)
+
+    client = await aiohttp_client(app)
+    download_url = client.make_url(download_url)
 
     # Create a temp dir `tmp` to store the test files
     output_file = os.path.join(tmp_path, "foo.txt")
-    print(output_file)
 
-    download_content(download_url, output_file)
+    await download_content(download_url, output_file)
 
     captured_stdout = capfd.readouterr().out
     expected_stdout = f"Failed to download {download_url!r}. Skipping this file!"
