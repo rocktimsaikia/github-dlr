@@ -84,6 +84,11 @@ async def download_content(download_url, output_file):
         printx(f":warning: Failed to download {download_url!r}. Skipping this file!")
 
 
+async def download_with_progress(download_url, content_filename, bar):
+    await download_content(download_url, content_filename)
+    bar()
+
+
 async def main(github_url, output_dir=None):
     """Main function."""
 
@@ -136,9 +141,10 @@ async def main(github_url, output_dir=None):
             # Update the progress bar with the name of the file being downloaded
             bar.text(f"Downloading {content_path}")
 
-            download_tasks.append(download_content(download_url, content_filename))
-
-            bar()  # Update the progress bar
+            task = asyncio.create_task(
+                download_with_progress(download_url, content_filename, bar)
+            )
+            download_tasks.append(task)
 
         await asyncio.gather(*download_tasks)
 
