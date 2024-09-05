@@ -17,6 +17,7 @@ requests = "^2.32.3"
 argparse = "^1.4.0"
 alive-progress = "^3.1.5"
 emoji = "^2.12.1"
+aiohttp = "^3.10.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"

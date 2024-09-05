@@ -1,4 +1,5 @@
 import argparse
+import asyncio
 
 from github_dlr import __version__
 from github_dlr.source import main
@@ -34,4 +35,4 @@ def cli():
 
     if args.github_path:
         print("\r")
-        main(args.github_path, output_dir=args.output)
+        asyncio.run(main(args.github_path, output_dir=args.output))
