@@ -13,7 +13,6 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.32.3"
 argparse = "^1.4.0"
 alive-progress = "^3.1.5"
 emoji = "^2.12.1"
@@ -21,7 +20,6 @@ aiohttp = "^3.10.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
-requests-mock = "^1.12.1"
 pytest-asyncio = "^0.24.0"
 pytest-aiohttp = "^1.0.5"
 
@@ -33,3 +31,5 @@ build-backend = "poetry.core.masonry.api"
 github-dlr = 'github_dlr.console:cli'
 gh-dlr = 'github_dlr.console:cli'
 
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
