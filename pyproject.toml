@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "github-dlr"
-version = "0.1.1"
+version = "0.1.2"
 description = "Download individual files and folders from Github"
 homepage = "https://github.com/rocktimsaikia/github-dlr"
 authors = ["Rocktim Saikia <rocktimthedev@gmail.com>"]
@@ -33,3 +33,5 @@ gh-dlr = 'github_dlr.console:cli'
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
+
+[tool.poetry_bumpversion.file."github_dlr/__init__.py"]
