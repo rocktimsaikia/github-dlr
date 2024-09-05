@@ -85,6 +85,12 @@ async def download_content(download_url, output_file):
 
 
 async def download_with_progress(download_url, content_filename, bar):
+    # This async task is for only to show the Alive bar progress
+    # on each download completion. Without wrapping these two pieces
+    # of code together in an async func, it is hard to show the visual
+    # progress bar per download. This is not needed for synchronous
+    # downloads. Since we are using async programming, it offer a better
+    # visual output.
     await download_content(download_url, content_filename)
     bar()
 
