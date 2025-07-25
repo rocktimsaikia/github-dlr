@@ -22,19 +22,19 @@ dependencies = [
     "aiohttp>=3.10.5,<4",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.2,<9",
+    "pytest-asyncio>=0.24.0,<0.25",
+    "pytest-aiohttp>=1.0.5,<2",
+]
+
 [project.urls]
 Homepage = "https://github.com/rocktimsaikia/github-dlr"
 
 [project.scripts]
 github-dlr = "github_dlr.console:cli"
 gh-dlr = "github_dlr.console:cli"
-
-[dependency-groups]
-dev = [
-    "pytest>=8.3.2,<9",
-    "pytest-asyncio>=0.24.0,<0.25",
-    "pytest-aiohttp>=1.0.5,<2",
-]
 
 [build-system]
 requires = ["hatchling"]
@@ -43,4 +43,3 @@ build-backend = "hatchling.build"
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
 
-[tool.poetry_bumpversion.file."github_dlr/__init__.py"]
