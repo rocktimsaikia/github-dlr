@@ -64,4 +64,4 @@ Thanks for using github-dlr!
 
 ## LICENSE
 
-[MIT](./LICENSE) License &copy; [Rocktim Saikia](https://rocktimsaikia.dev) 2024
+[MIT](./LICENSE) License &copy; [Rocktim Saikia](https://rocktimsaikia.dev) 2025
