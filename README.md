@@ -14,6 +14,12 @@ Requires Python 3.8+.
 pip install github-dlr
 ```
 
+Or with [pipx](https://pipx.pypa.io/):
+
+```sh
+pipx install github-dlr
+```
+
 ## Usage
 
 Pass any GitHub file or folder URL:
