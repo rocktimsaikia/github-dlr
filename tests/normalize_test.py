@@ -66,6 +66,26 @@ def test_normalize_github_url_invalid_url():
         )
 
 
+def test_normalize_github_url_too_short():
+    with pytest.raises(ValueError, match="Not a valid Github URL"):
+        normalize_github_url("https://github.com/owner")
+
+
+def test_normalize_github_url_repo_root_only():
+    with pytest.raises(ValueError, match="Not a valid Github URL"):
+        normalize_github_url("https://github.com/owner/repo")
+
+
+def test_normalize_github_url_branch_root_only():
+    with pytest.raises(ValueError, match="Not a valid Github URL"):
+        normalize_github_url("https://github.com/owner/repo/tree/main")
+
+
+def test_normalize_github_url_non_tree_segment():
+    with pytest.raises(ValueError, match="Not a valid Github URL"):
+        normalize_github_url("https://github.com/owner/repo/issues/123")
+
+
 def test_normalize_github_url_percent_encoded_space_in_target():
     # Browser address bar produces %20-encoded URLs. The decoded form is what
     # we want on disk and what aiohttp will (re-)encode for the API call.
