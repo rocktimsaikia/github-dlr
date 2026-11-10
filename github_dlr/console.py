@@ -35,4 +35,7 @@ def cli():
 
     if args.github_path:
         print("\r")
-        asyncio.run(main(args.github_path, output_dir=args.output))
+        try:
+            asyncio.run(main(args.github_path, output_dir=args.output))
+        except ValueError as exc:
+            parser.error(str(exc))

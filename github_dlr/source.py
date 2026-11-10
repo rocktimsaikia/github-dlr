@@ -21,6 +21,14 @@ def normalize_github_url(github_url: str):
 
     parsed_url = urlparse(github_url)
     github_path = [unquote(part) for part in parsed_url.path.split("/")]
+    if (
+        len(github_path) < 6
+        or not all(github_path[1:3])
+        or github_path[3] not in ("tree", "blob")
+        or not github_path[4]
+        or not github_path[-1]
+    ):
+        raise ValueError("Not a valid Github URL")
     owner = github_path[1]
     repo = github_path[2]
     branch = github_path[4]
